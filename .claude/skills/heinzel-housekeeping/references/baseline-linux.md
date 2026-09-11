@@ -106,8 +106,33 @@ zypper --quiet list-updates 2>/dev/null \
 zypper list-patches --category security 2>/dev/null
 ```
 
+**Arch:**
+
+```bash
+# Total pending updates. checkupdates (pacman-contrib)
+# uses a throwaway sync db — safe on any connection,
+# no partial-upgrade risk.
+checkupdates 2>/dev/null | grep -c "^"
+
+# Known-CVE exposure among installed packages.
+# arch-audit needs network; -u limits to packages
+# with a fixed version available.
+arch-audit -u 2>/dev/null
+```
+
 - **WARN** if any security updates are pending
 - Report both counts (total pending and security-only)
+- On Arch there is no security-only archive: if
+  `arch-audit` lists vulnerable packages, the fix is a
+  full `pacman -Syu` (see `rules/arch.md`), not
+  cherry-picking security packages. Report `arch-audit`
+  findings as their own line, not under "pending
+  updates".
+- **INFO** if `checkupdates` is missing (`pacman-contrib`
+  not installed) — fall back to `pacman -Qu` and say the
+  sync database, and therefore the count, may be stale
+- **INFO** if `arch-audit` is missing — report CVE
+  exposure as unchecked
 
 ## Automatic Security Updates
 
@@ -197,7 +222,31 @@ systemctl is-active dnf-automatic.timer 2>/dev/null \
 Check if `zypper-patch` or equivalent auto-update timer is
 configured.
 
+**Arch:**
+
+```bash
+# Any user-installed pacman/update timer?
+systemctl list-timers --no-pager --no-legend 2>/dev/null \
+  | grep -iE "pacman|checkupdates|arch"
+
+# Last real upgrade activity from the pacman log.
+tail -n 100 /var/log/pacman.log 2>/dev/null \
+  | grep " upgraded " | tail -3
+```
+
+Arch ships no auto-update mechanism by default (see
+`rules/arch.md`) — a missing timer is expected, not a
+misconfiguration. What matters on a rolling release
+is that upgrades actually happen:
+
 - **WARN** if auto-update mechanism is not active
+- **Arch:** warn only when there is also no recent
+  upgrade activity in the log checked above — a
+  rolling host not upgraded in 30+ days carries
+  accumulating risk
+- **INFO** if a timer only runs `checkupdates`
+  (notify-only workflow — the preferred pattern from
+  `rules/arch.md`)
 
 ## Firewall Status
 
@@ -221,7 +270,36 @@ firewall-cmd --state
 firewall-cmd --state
 ```
 
-- **CRITICAL** if the firewall is inactive or not installed
+**Arch (detection order, first hit wins — see
+`rules/arch.md`):**
+
+```bash
+if systemctl is-active --quiet nftables; then
+  echo "nftables active"
+  nft list ruleset | grep -E "hook input"
+elif systemctl is-active --quiet firewalld; then
+  echo "firewalld active"
+elif systemctl is-active --quiet ufw; then
+  echo "ufw active"
+elif nft list ruleset 2>/dev/null | grep -q .; then
+  echo "unmanaged ruleset present"
+else
+  echo "no active firewall"
+fi
+```
+
+For nftables, the `hook input` line must carry
+`policy drop` (or `policy reject`) — the shipped
+default `/etc/nftables.conf` does.
+
+- **CRITICAL** if the firewall is inactive or not
+  installed
+- **WARN** on Arch if no firewall is active at all —
+  Arch ships none by default, so a bare host behind an
+  external firewall is a legitimate posture, but flag
+  it so the user confirms the protection is external
+- **WARN** on Arch if an nftables ruleset is loaded
+  without a drop/reject input policy
 
 ## Failed systemd Units
 
@@ -321,8 +399,44 @@ echo "Running: $running"
 echo "Installed: $installed"
 ```
 
+**Arch:**
+
+```bash
+running=$(uname -r)
+
+# Cleanest signal: the running kernel's module tree
+# disappears when a later kernel replaces it.
+[ -d "/usr/lib/modules/$running" ] \
+  && echo "running kernel still installed" \
+  || echo "running kernel replaced — reboot pending"
+
+# Package-version comparison. Normalize the version
+# format: 6.12.8.arch1-1 -> 6.12.8-arch1-1.
+pacman -Q linux 2>/dev/null   # linux-lts/linux-zen possible
+```
+
 - **INFO** if running kernel differs from installed (reboot
   recommended)
+
+## Unmerged Config Files (.pacnew) — Arch
+
+A rolling upgrade that ships a new version of a
+locally-modified config file writes it alongside as
+`.pacnew` instead of overwriting:
+
+```bash
+find /etc \
+  \( -name '*.pacnew' -o -name '*.pacsave' \
+     -o -name '*.pacorig' \) 2>/dev/null
+```
+
+- **WARN** if any exist — the running config is stale
+  against the new package version. Merge with `pacdiff`
+  (pacman-contrib) or manually, then reload the service.
+
+On non-Arch systems this `find` returns nothing
+(different naming: `.rpmnew`, `.dpkg-dist`), so the
+check is harmless everywhere.
 
 ## Critical Services: Running Binary vs Installed Package
 

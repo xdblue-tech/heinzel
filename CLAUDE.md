@@ -138,8 +138,8 @@ remote connection before any other work.
   deny/drop.** See `rules/<family>.md`.
 - **Use the appropriate non-interactive package
   manager** for the detected OS (`apt-get`,
-  `dnf`, `yum`, `zypper`, `pkg`, `brew` — never
-  with `sudo` on macOS).
+  `dnf`, `yum`, `zypper`, `pacman`, `pkg`, `brew` —
+  never with `sudo` on macOS).
 - **Prefer stable/official repos only.**
 - **Stick to stable release tracks.**
 - **Test before applying.** Use dry-run/test modes

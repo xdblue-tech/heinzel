@@ -14,16 +14,20 @@ its OS.
 1. Determine Linux, macOS, or FreeBSD: `uname -s`
 
 2. **If Linux** — detect distro and version:
+
    ```
    . /etc/os-release && \
      echo "${ID}|${VERSION_ID}|${PRETTY_NAME}"
    ```
-   Distro families: `debian`, `rhel`, `suse`.
+
+   Distro families: `debian`, `rhel`, `suse`,
+   `arch`.
    Map the distro to a family via the os-release
    `ID` and `ID_LIKE` fields (e.g. `ubuntu` →
    `debian`; `centos`, `rocky`, `alma`, `fedora` →
-   `rhel`; `opensuse*` variants → `suse`). If no
-   family file matches (e.g. Alpine, Arch), tell
+   `rhel`; `opensuse*` variants → `suse`; `arch`,
+   `archarm`, `ID_LIKE=arch` → `arch`). If no
+   family file matches (e.g. Alpine), tell
    the user, proceed cautiously with generic
    commands, and apply extra verify-before-running
    care.
@@ -31,16 +35,20 @@ its OS.
    (`lscpu`, `free -h`, `df -h`).
 
 3. **If macOS** — detect version and arch:
+
    ```
    sw_vers -productVersion && uname -m
    ```
+
    Read `rules/macos.md`. Gather hardware info
    (`sysctl` for CPU/RAM, `df -h`).
 
 4. **If FreeBSD** — detect version and arch:
+
    ```
    freebsd-version && uname -m
    ```
+
    Read `rules/freebsd.md`. Gather hardware info
    (`sysctl` for CPU/RAM, `df -h`,
    `zpool status` if ZFS).

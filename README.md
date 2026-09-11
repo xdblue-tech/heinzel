@@ -82,16 +82,20 @@ changes — no changes until you say go.
 ### Steps
 
 1. **Clone the repo and start heinzel**
+
    ```
    git clone https://github.com/wintermeyer/heinzel.git
    cd heinzel
    claude
    ```
+
    Or use `opencode` to launch OpenCode.
 2. **Describe what you need in plain English**
+
    ```
    ❯ Install postgresql on server1.example.com
    ```
+
 3. **Answer a few questions on the first connection**
    The first time Heinzel connects to a new server,
    it may ask for details it can't detect on its own
@@ -503,7 +507,7 @@ local edits won't conflict on `git pull`.
 opencode
 ```
 
-Select the Ollama model from the model picker (search for qwen). 
+Select the Ollama model from the model picker (search for qwen).
 Start the model picker by typing `/models` in the OpenCode terminal.
 
 > **Note:** Larger models (14B+) produce more
@@ -780,7 +784,7 @@ Heinzel reduces this risk with multiple layers:
 
 - **Distro-specific rule files** — Instead of relying
   on the LLM's memory, heinzel loads a verified rule
-  file for each platform (Debian, RHEL, SUSE,
+  file for each platform (Debian, RHEL, SUSE, Arch,
   macOS). These files contain the correct
   commands, package managers, firewall tools, and
   common pitfalls for each distro. The LLM reads
@@ -830,8 +834,9 @@ log show \
 | Family  | Distributions                     | Rule file          |
 | ------- | --------------------------------- | ------------------ |
 | Debian  | Debian, Ubuntu                    | `rules/debian.md`  |
-| RHEL    | RHEL, CentOS, Fedora, Rocky, Alma | `rules/rhel.md`   |
-| SUSE    | openSUSE, SLES                    | `rules/suse.md`   |
+| RHEL    | RHEL, CentOS, Fedora, Rocky, Alma | `rules/rhel.md`    |
+| SUSE    | openSUSE, SLES                    | `rules/suse.md`    |
+| Arch    | Arch, Manjaro, EndeavourOS        | `rules/arch.md`    |
 | macOS   | macOS (Apple Silicon & Intel)     | `rules/macos.md`   |
 | FreeBSD | FreeBSD (all versions)            | `rules/freebsd.md` |
 
@@ -947,6 +952,7 @@ rules/                 — Upstream rule files (git-tracked)
   rhel.md              — RHEL, CentOS, Fedora, Rocky,
                          Alma rules
   suse.md              — openSUSE & SLES rules
+  arch.md              — Arch Linux rules
   macos.md             — macOS rules
   freebsd.md           — FreeBSD rules
   efi-boot.md          — EFI boot management & dual-boot
@@ -1039,7 +1045,7 @@ deployments — from initial setup to ongoing system
 management.
 
 Contact the project founder Stefan Wintermeyer and
-his team: **sw@wintermeyer-consulting.de**
+his team: **<sw@wintermeyer-consulting.de>**
 
 ## Contributing
 
