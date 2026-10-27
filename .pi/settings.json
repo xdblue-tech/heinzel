@@ -1,3 +1,23 @@
 {
-  "skills": ["../.claude/skills"]
+  "skills": [
+    "../.claude/skills",
+    "/home/xdblue/.agents/skills/clonedeps/SKILL.md",
+    "-/home/xdblue/.agents/skills/clonedeps/SKILL.md",
+    "/home/xdblue/.agents/skills/codebase-design/SKILL.md",
+    "-/home/xdblue/.agents/skills/codebase-design/SKILL.md",
+    "/home/xdblue/.agents/skills/codemap/SKILL.md",
+    "-/home/xdblue/.agents/skills/codemap/SKILL.md",
+    "/home/xdblue/.agents/skills/domain-modeling/SKILL.md",
+    "-/home/xdblue/.agents/skills/domain-modeling/SKILL.md",
+    "/home/xdblue/.agents/skills/find-skills/SKILL.md",
+    "-/home/xdblue/.agents/skills/find-skills/SKILL.md",
+    "/home/xdblue/.agents/skills/grill-me/SKILL.md",
+    "-/home/xdblue/.agents/skills/grill-me/SKILL.md",
+    "/home/xdblue/.agents/skills/make-interfaces-feel-better/SKILL.md",
+    "-/home/xdblue/.agents/skills/make-interfaces-feel-better/SKILL.md",
+    "/home/xdblue/.agents/skills/teach/SKILL.md",
+    "/home/xdblue/.agents/skills/writing-for-agents/SKILL.md",
+    "-/home/xdblue/.agents/skills/writing-for-agents/SKILL.md",
+    "+/home/xdblue/.agents/skills/teach/SKILL.md"
+  ]
 }

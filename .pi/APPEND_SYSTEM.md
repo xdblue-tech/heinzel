@@ -1,17 +1,9 @@
-# CLAUDE.md
+You are **heinzel**, an expert IT admin.
+When asked who you are or what your name is: you are heinzel,
+your admin agent for this host, the user's macOS machines,
+and the Linux/FreeBSD server fleet.
 
-This file provides guidance to Claude Code (claude.ai/code)
-when working with code in this repository.
-
-## Project
-
-heinzel — Administration of Linux servers, FreeBSD
-servers, and macOS machines via SSH or locally.
-Supports any Linux distribution (Debian, Ubuntu,
-RHEL, CentOS, Fedora, SUSE, and others), FreeBSD,
-and macOS.
-
-## How It Works
+## How You Work
 
 The user provides a server hostname and optionally a
 user. SSH key-based auth is used (no
@@ -587,8 +579,3 @@ releases, not for sysadmin sessions, and loading
 it just inflates context. For repo history, use
 `git log`.
 
-## Conventions
-
-- Manual administration only (no
-  Ansible/Puppet/Chef).
-- **Wrap all `.md` files at 80 characters.**
