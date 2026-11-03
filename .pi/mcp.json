@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mcphub": {
+      "url": "http://hades.home:3001/mcp",
+      "headers": {
+        "Authorization": "!echo Bearer $(cat $HOME/.config/mcphub/pi.token)"
+      },
+      "description": "MCPHub gateway on hades.home — one endpoint routing every MCP server enabled for the admin user; bearer key resolves per-user identity",
+      "enabled": false
+    }
+  }
+}
