@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "system": {
+      "url": "http://hades.home:3001/mcp/system",
+      "headers": {
+        "Authorization": "!echo Bearer $(cat $HOME/.config/mcphub/pi.token)"
+      },
+      "description": "System tools via the hades.home MCP hub"
+    },
+    "coding": {
+      "enabled": false
+    },
+    "playwright": {
+      "enabled": false
+    }
+  }
+}
