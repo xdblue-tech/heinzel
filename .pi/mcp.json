@@ -8,7 +8,7 @@
       "description": "System tools via the hades.home MCP hub"
     },
     "coding": {
-      "enabled": false
+      "enabled": true
     },
     "playwright": {
       "enabled": false
