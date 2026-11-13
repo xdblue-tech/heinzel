@@ -1,11 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
+    "arcane-cli": {
+      "source": "getarcaneapp/skills",
+      "sourceType": "github",
+      "skillPath": "arcane-cli/SKILL.md",
+      "computedHash": "f8822d4c58aabf9fb8818b2409e17137c9c50f4a815c0b7763a70533e51ee25b"
+    },
     "chezmoi-workflows": {
       "source": "terrylica/cc-skills",
       "sourceType": "github",
       "skillPath": "plugins/dotfiles-tools/skills/chezmoi-workflows/SKILL.md",
-      "computedHash": "81bd4672cf270a831db049c887f28883b3509a8862d7c431f64ecd4198329ddf"
+      "computedHash": "e77b73a457e7c8c85ad7ae75eebdd9bb8ee6446e11bddff5daa48bfbcbc81aff"
     }
   }
 }
